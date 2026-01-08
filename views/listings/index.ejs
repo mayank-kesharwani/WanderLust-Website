@@ -1,0 +1,108 @@
+<% layout("./layouts/boilerplate")-%>
+    <style>
+        #filters{
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .filter{
+            text-align: center;
+            margin-right: 1.8rem;
+            margin-top: 2rem;
+            opacity: 0.83;
+
+        }
+        .filter:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+        .tax-toggle{
+            display: flex;
+            align-items: center;
+        }
+        .tax{
+            display: flex;
+            align-items: center;
+            height: 3rem;
+            width: 15.5rem;
+            border: 1.5px solid black;
+            border-radius: 2rem;
+            text-align: center;
+            line-height: normal;
+        }
+        .tax-info{
+            display: none;
+        }
+    </style>
+    <!-- <h3>All Listings</h3> -->
+    <div id="filters">
+        <div class="filter" data-category="Trending">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+        </div>
+        <div class="filter" data-category="Rooms">
+            <i class="fa-solid fa-bed"></i>
+            <p>Rooms</p>
+        </div>
+        <div class="filter" data-category="Train">
+            <i class="fa-solid fa-train"></i>
+            <p>Train</p>
+        </div>
+        <div class="filter" data-category="Flights">
+            <i class="fa-solid fa-plane"></i>
+            <p>Flights</p>
+        </div>
+        <div class="filter" data-category="Iconic Cities">
+            <i class="fa-solid fa-city"></i>
+            <p>Iconic Cities</p>
+        </div>
+        <div class="filter" data-category="Beach">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <p>Beach</p>
+        </div>
+        <div class="filter" data-category="Mountains">
+            <i class="fa-solid fa-mountain"></i>
+            <p>Mountains</p>
+        </div>
+        <div class="filter" data-category="Pools">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Pools</p>
+        </div>
+        <div class="filter" data-category="Villa">
+            <i class="fa-brands fa-fort-awesome"></i>
+            <p>Villa</p>
+        </div>
+        <div class="filter" data-category="Farms">
+            <i class="fa-solid fa-cow"></i>
+            <p>Farms</p>
+        </div>
+        <div class="filter" data-category="Arctic">
+            <i class="fa-solid fa-snowflake"></i>
+            <p>Arctic</p>
+        </div>
+        <div class="tax-toggle ms-5">
+            <div class="tax">
+                <div class="form-check-reverse form-switch ms-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3" listing_div>
+        <%for(let listing of allListings){%>
+        <a href="/listings/<%=listing._id%>" class="listing-link">
+            <div class="card col listing-card">
+                <img src="<%=listing.image.url%>" class="card-img-top" style="height: 18rem;" alt="listing_image">
+                <div class="card-img-overlay"></div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <b><%=listing.title%></b> <br>
+                        &#8377; <%=listing.price.toLocaleString("en-IN")%> / night
+                        <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+                    </p>
+                </div>
+            </div>
+        </a>
+        <%}%>
+    </div>
+    <script src="/js/script.js"></script>
