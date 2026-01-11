@@ -10,10 +10,13 @@ module.exports.signupUser = async (req, res, next) => {
   try {
     let { username, email, password } = req.body;
 
-    const otp = otpGenerator.generate(6, {
-      upperCaseAlphabets: false,
-      specialChars: false,
-    });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      req.flash("error", "Email already registered. Please login.");
+      return res.redirect("/login");
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
     const otpExpiry = Date.now() + 5 * 60 * 1000;
 
@@ -26,7 +29,17 @@ module.exports.signupUser = async (req, res, next) => {
     });
     const registeredUser = await User.register(newUser, password);
 
-    await sendOtp(email, otp);
+    try {
+      await sendOtp(email, otp);
+    } catch (mailErr) {
+      console.error("OTP email failed:", mailErr);
+
+      // rollback user creation
+      await User.findByIdAndDelete(registeredUser._id);
+
+      req.flash("error", "Unable to send OTP. Please try again.");
+      return res.redirect("/signup");
+    }
 
     req.flash("success", "OTP sent to your email");
     res.render("users/verifyOtp.ejs", { email });
