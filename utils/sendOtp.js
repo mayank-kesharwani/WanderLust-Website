@@ -1,19 +1,14 @@
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = async (email, otp) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS
-    },
-    connectionTimeout: 10000,
-  });
-
-  await transporter.sendMail({
-    from: process.env.EMAIL,
+  const msg = {
     to: email,
+    from: process.env.SENDER_EMAIL, // must be verified in SendGrid
     subject: "WanderLust OTP Verification",
-    text: `Your OTP is ${otp}. Valid for 5 minutes.`
-  });
+    text: `Your OTP is ${otp}. It is valid for 5 minutes.`,
+  };
+
+  await sgMail.send(msg);
 };
