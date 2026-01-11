@@ -7,6 +7,9 @@ const userController = require("../controllers/user.js")
 //Signup
 router.route("/signup").get(userController.signup).post(wrapAsync(userController.signupUser))
 
+//Verify OTP
+router.post("/verify-otp", wrapAsync(userController.verifyOtp));
+
 //Login
 router.route("/login").get(userController.login).post(saveRedirectUrl, passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}), userController.loginUser)
 

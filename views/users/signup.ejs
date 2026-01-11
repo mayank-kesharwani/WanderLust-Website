@@ -2,6 +2,9 @@
     <div class="row">
         <h1 class="col-6 offset-3 mt-3">SignUp on Wanderlust</h1>
         <div class="col-6 offset-3 mt-3">
+            <p class="text-muted text-center">
+                We’ll send an OTP to your email for verification
+            </p>
             <form action="/signup" method="post" novalidate class="needs-validation">
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
@@ -11,8 +14,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="text" name="email" placeholder="Email" class="form-control" id="email" required>
-                    <div class="invalid-feedback">Please enter email</div>
+                    <input type="email" name="email" placeholder="Email" class="form-control" id="email" required>
+                    <div class="invalid-feedback">Please enter a valid email address</div>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
