@@ -1,8 +1,14 @@
 <style>
   .input-search{
     border-radius: 2rem;
+    min-width: 160px;
     padding: 0.5rem 3rem 0.5rem 2rem;
   }
+  @media (max-width: 576px) {
+  .input-search {
+    width: 100%;
+  }
+}
   .btn-search{
     color: #fe424d;
     border: 1px solid #fe424d !important;
@@ -16,32 +22,75 @@
     background-color: #fe424d  !important;
   }
 </style>
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link" href="/listings">Wanderlust</a>
-        </div>
-        <div class="navbar-nav ms-auto"> <!--Search-->
-          <form class="d-flex">
-            <input class="form-control me-2 input-search" type="search" placeholder="Search Destinations" aria-label="Search" name="search" input-search>
-            <button class="btn btn-outline-success btn-search" type="submit" search-btn>Search</button>
-          </form>
-        </div>
-        <div class="navbar-nav ms-auto">
+<nav class="navbar navbar-expand-md bg-light border-bottom sticky-top">
+  <div class="container-fluid">
+
+    <!-- Brand -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+      <span class="fw-semibold d-none d-sm-inline">Wanderlust</span>
+    </a>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
           <a class="nav-link" href="/listings/new">Wanderlust your home</a>
-          <%if(!currentUser){%>
-            <a class="nav-link active" aria-current="page" href="/signup"><b>SignUp</b></a>
-            <a class="nav-link" href="/login"><b>LogIn</b></a>
-          <%}%>
-          <%if(currentUser){%>
-            <a class="nav-link" href="/logout"><b>Logout</b></a>
-          <%}%>
-        </div>
-      </div>
+        </li>
+      </ul>
+
+      <!-- Search -->
+      <form
+        class="d-flex my-2 my-md-0 mx-md-3"
+        role="search"
+        action="/listings"
+        method="get"
+      >
+        <input
+          class="form-control me-2 input-search"
+          type="search"
+          placeholder="Search destinations"
+          aria-label="Search"
+          name="search"
+        />
+        <button class="btn btn-outline-success btn-search" type="submit">
+          Search
+        </button>
+      </form>
+
+      <!-- Auth links -->
+      <ul class="navbar-nav ms-md-3">
+        <% if (!currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="/signup">Sign Up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="/login">Log In</a>
+          </li>
+        <% } %>
+
+        <% if (currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link fw-bold" href="/logout">Logout</a>
+          </li>
+        <% } %>
+      </ul>
+
     </div>
-  </nav>
+  </div>
+</nav>
