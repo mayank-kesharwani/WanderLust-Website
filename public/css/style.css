@@ -86,3 +86,70 @@ body{
     width: 80vh;
 }
 
+
+/* Wrapper */
+.filter-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+/* Horizontal scroll container */
+#filters {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.5rem 1rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+#filters::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+
+/* Individual filter */
+.filter {
+  min-width: 90px;
+  text-align: center;
+  cursor: pointer;
+  color: #555;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.filter i {
+  font-size: 1.4rem;
+}
+
+.filter p {
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.filter:hover {
+  color: #000;
+  transform: scale(1.05);
+}
+
+/* Scroll buttons (desktop only) */
+.scroll-btn {
+  background: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Show arrows on larger screens */
+@media (min-width: 768px) {
+  .scroll-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
