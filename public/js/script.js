@@ -47,7 +47,9 @@ function listings_idx(data) {
                     <p class="card-text mt-2">
                         <b>${e.title}</b> <br>
                         &#8377; ${e.price.toLocaleString("en-IN")} / night
-                        <i class="tax-info">&nbsp; + &nbsp;<%=(listing.price * 0.18).toLocaleString("en-IN")%> (18% GST)</i>
+                        <i class="tax-info">&nbsp; + &nbsp;${(
+                          e.price * 0.18
+                        ).toLocaleString("en-IN")} (18% GST)</i>
                     </p>
                 </div>
             </div>
@@ -59,12 +61,24 @@ function listings_idx(data) {
 let icons = document.getElementsByClassName("filter");
 for (let icon of icons) {
   icon.addEventListener("click", () => {
-    fetch(`/listings?category=${icon.innerText}`)
-      .then((response) => response.json())
-      .then((data) => {
-        listings_idx(data);
-      })
-      .catch((error) => console.error("Error fetching listings:", error));
+    const isActive = icon.classList.contains("active");
+    // Remove active from all filters
+    for (let i of icons) {
+      i.classList.remove("active");
+    }
+    // Toggle logic
+    if (!isActive) {
+      icon.classList.add("active");
+      // Add active to clicked filter;
+      fetch(`/listings?category=${icon.innerText}`)
+        .then((response) => response.json())
+        .then((data) => listings_idx(data));
+    } else {
+      // toggle OFF → show all listings
+      fetch(`/listings`)
+        .then((res) => res.json())
+        .then((data) => listings_idx(data));
+    }
   });
 }
 
