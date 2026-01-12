@@ -68,24 +68,6 @@ for (let icon of icons) {
   });
 }
 
-//Horizontal Slider
-const filters = document.getElementById("filters");
-const leftBtn = document.querySelector(".scroll-btn.left");
-const rightBtn = document.querySelector(".scroll-btn.right");
-
-leftBtn?.addEventListener("click", () => {
-  filters.scrollLeft -= 200;
-});
-
-rightBtn?.addEventListener("click", () => {
-  filters.scrollLeft += 200;
-});
-
-// Mouse wheel horizontal scroll
-filters.addEventListener("wheel", (e) => {
-  e.preventDefault();
-  filters.scrollLeft += e.deltaY;
-});
 //Text Searching
 // let btn = document.querySelector("[search-btn]")
 // let text = document.querySelector("[input-search]")
