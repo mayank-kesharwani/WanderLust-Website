@@ -100,6 +100,7 @@ module.exports.verifyOtp = async (req, res, next) => {
 
 module.exports.resendOtp = async (req, res) => {
   const { email } = req.body;
+  console.log("RESEND OTP EMAIL:", email);
   const user = await User.findOne({ email });
 
   if (!user) return res.status(404).json({ error: "User not found" });
