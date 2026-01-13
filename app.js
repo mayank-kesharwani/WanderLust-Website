@@ -105,7 +105,7 @@ app.use("/listings/:id/reviews", reviewRouter)
 //user Routes
 app.use("/", userRouter)
 //static routes
-app.use("/", staticRoutes);
+app.use("/", staticRouter);
 //any other path
 app.all("*", (req, res, next)=>{
     next(new ExpressError(404, "Page Not Found!"))
