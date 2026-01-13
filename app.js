@@ -19,6 +19,7 @@ const User = require("./models/user.js")
 const listingRouter = require("./routes/listing.js")
 const reviewRouter = require("./routes/review.js")
 const userRouter = require("./routes/user.js")
+const staticRouter = require("./routes/static");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -78,7 +79,7 @@ passport.deserializeUser(User.deserializeUser())
 app.use(express.urlencoded({extended: true}))
 app.use(express.json());
 
-app.use("/users", userRouter);
+// app.use("/users", userRouter);
 //method override
 app.use(methodOverride("_method"))
 
@@ -103,6 +104,8 @@ app.use("/listings", listingRouter)
 app.use("/listings/:id/reviews", reviewRouter)
 //user Routes
 app.use("/", userRouter)
+//static routes
+app.use("/", staticRoutes);
 //any other path
 app.all("*", (req, res, next)=>{
     next(new ExpressError(404, "Page Not Found!"))
