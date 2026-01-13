@@ -66,32 +66,32 @@
     <!-- Collapsible Content -->
     <div class="collapse navbar-collapse" id="navbarNav">
 
-      <!-- Left links -->
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/listings/new">Wanderlust your home</a>
-        </li>
-      </ul>
-
+      
       <!-- Search -->
       <form
-        class="d-flex my-2 my-md-0 mx-md-3"
-        role="search"
-        action="/listings"
-        method="get"
+      class="d-flex my-2 my-md-0 mx-md-3"
+      role="search"
+      action="/listings"
+      method="get"
       >
-        <input
-          class="form-control me-2 input-search"
-          type="search"
-          placeholder="Search destinations"
-          aria-label="Search"
-          name="search"
-        />
-        <button class="btn btn-outline-success btn-search" type="submit">
-          Search
-        </button>
-      </form>
-
+      <input
+      class="form-control me-2 input-search"
+      type="search"
+      placeholder="Search destinations"
+      aria-label="Search"
+      name="search"
+      />
+      <button class="btn btn-outline-success btn-search" type="submit">
+        Search
+      </button>
+    </form>
+    
+    <!-- Left links -->
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/listings/new">Wanderlust your home</a>
+      </li>
+    </ul>
       <!-- Auth links -->
       <ul class="navbar-nav ms-md-3">
         <% if (!currentUser) { %>
