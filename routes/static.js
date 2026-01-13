@@ -2,7 +2,12 @@ const express = require("express");
 const router = express.Router();
 const staticController = require("../controllers/static");
 
-router.get("/privacy", staticController.privacy);
-router.get("/terms", staticController.terms);
+// Privacy page
+router.route("/privacy")
+  .get(staticController.privacy);
+
+// Terms page
+router.route("/terms")
+  .get(staticController.terms);
 
 module.exports = router;
