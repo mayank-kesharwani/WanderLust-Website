@@ -4,5 +4,5 @@ module.exports.privacy = (req, res) => {
 };
 
 module.exports.terms = (req, res) => {
-  res.render("./static/terms");
+  res.render("static/terms");
 };

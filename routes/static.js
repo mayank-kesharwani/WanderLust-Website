@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const staticController = require("../controllers/static");
+const staticController = require("../controllers/static.js");
 
 // Privacy page
 router.route("/privacy")
