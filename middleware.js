@@ -2,6 +2,7 @@ const Listing = require("./models/listing.js")
 const Review = require("./models/review.js")
 const ExpressError = require("./utils/ExpressErr.js")
 const { listingSchema, reviewSchema } = require("./schema.js")
+const rateLimit = require("express-rate-limit");
 
 module.exports.isLoggedIn = (req, res, next)=>{
     if(!req.isAuthenticated()){
@@ -55,3 +56,12 @@ module.exports.validateReview = (req, res, next)=>{
         next()
     }
 }
+
+// //rateLimiter
+// module.exports.aiLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 50,                 // max 50 requests
+//   message: {
+//     error: "Too many chatbot requests. Please try again later."
+//   }
+// });
