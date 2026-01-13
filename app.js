@@ -76,7 +76,9 @@ passport.deserializeUser(User.deserializeUser())
 
 //parser
 app.use(express.urlencoded({extended: true}))
+app.use(express.json());
 
+app.use("/users", userRoutes);
 //method override
 app.use(methodOverride("_method"))
 

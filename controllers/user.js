@@ -99,10 +99,15 @@ module.exports.verifyOtp = async (req, res, next) => {
 };
 
 module.exports.resendOtp = async (req, res) => {
-  const { email } = req.body;
-  console.log("RESEND OTP EMAIL:", email);
-  const user = await User.findOne({ email });
+  console.log("HEADERS:", req.headers);
+  console.log("BODY:", req.body);
 
+  const { email } = req.body;
+  console.log("EMAIL:", email);
+
+  const user = await User.findOne({ email });
+  console.log("USER FOUND:", !!user);
+  
   if (!user) return res.status(404).json({ error: "User not found" });
 
   if (user.otpResendAt > Date.now()) {
