@@ -18,17 +18,8 @@ body{
 .nav-link{
     color: #222222 !important;
 }
-.f-info{
-    height: 8rem;
-    background-color: #ebebeb;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: space-evenly;
-    text-align: center;
-    
-}
-.f-info-links, .f-info-socials, .f-brand{
+
+/* .f-info-links, .f-info-socials, .f-brand{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -37,7 +28,7 @@ body{
 }
 .f-info-socials i{
     font-size: 1.2rem;
-}
+} */
 .f-info-links a{
     text-decoration: none;
     color: #222222;
