@@ -81,7 +81,63 @@ for (let icon of icons) {
     }
   });
 }
+//OTP Cooldown Timer
+let expiryTime = Date.now() + 5 * 60 * 1000;
 
+  // ⏱ Resend cooldown (60 seconds)
+  let resendCooldown = 60;
+
+  const timerEl = document.getElementById("otp-timer");
+  const resendBtn = document.getElementById("resendBtn");
+
+  // OTP expiry timer
+  setInterval(() => {
+    const diff = expiryTime - Date.now();
+    if (diff <= 0) {
+      timerEl.innerText = "OTP expired. Please resend OTP.";
+      return;
+    }
+    const min = Math.floor(diff / 60000);
+    const sec = Math.floor((diff % 60000) / 1000);
+    timerEl.innerText = `OTP expires in ${min}:${sec.toString().padStart(2, "0")}`;
+  }, 1000);
+
+  // Resend cooldown timer
+  let cooldownInterval = setInterval(() => {
+    if (resendCooldown <= 0) {
+      resendBtn.disabled = false;
+      resendBtn.innerText = "Resend OTP";
+      clearInterval(cooldownInterval);
+      return;
+    }
+    resendBtn.innerText = `Resend OTP (${resendCooldown--}s)`;
+  }, 1000);
+
+  // Resend OTP click
+  resendBtn.addEventListener("click", async () => {
+    resendBtn.disabled = true;
+    resendCooldown = 60;
+
+    const res = await fetch("/resend-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "<%= email %>" })
+    });
+
+    const data = await res.json();
+    alert(data.success || data.error);
+
+    cooldownInterval = setInterval(() => {
+      if (resendCooldown <= 0) {
+        resendBtn.disabled = false;
+        resendBtn.innerText = "Resend OTP";
+        clearInterval(cooldownInterval);
+        return;
+      }
+      resendBtn.innerText = `Resend OTP (${resendCooldown--}s)`;
+    }, 1000);
+  });
+  
 //Text Searching
 // let btn = document.querySelector("[search-btn]")
 // let text = document.querySelector("[input-search]")

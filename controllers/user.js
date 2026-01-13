@@ -1,10 +1,14 @@
 const User = require("../models/user.js");
-const otpGenerator = require("otp-generator");
+const crypto = require("crypto");
 const sendOtp = require("../utils/sendOtp");
 
 module.exports.signup = (req, res) => {
   res.render("users/signup.ejs");
 };
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 module.exports.signupUser = async (req, res, next) => {
   try {
@@ -16,15 +20,17 @@ module.exports.signupUser = async (req, res, next) => {
       return res.redirect("/login");
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp = generateOTP();
 
     const otpExpiry = Date.now() + 5 * 60 * 1000;
+    const otpResendAt = Date.now() + 60 * 1000;
 
     const newUser = new User({
       email,
       username,
       otp,
       otpExpiry,
+      otpResendAt,
       isVerified: false,
     });
     const registeredUser = await User.register(newUser, password);
@@ -54,14 +60,34 @@ module.exports.verifyOtp = async (req, res, next) => {
 
   const user = await User.findOne({ email });
 
-  if (!user || user.otp !== otp || user.otpExpiry < Date.now()) {
-    req.flash("error", "Invalid or expired OTP");
+  if (!user) {
+    req.flash("error", "User not found");
     return res.redirect("/signup");
+  }
+
+  // Already verified?
+  if (user.isVerified) {
+    req.flash("success", "Email already verified. Please login.");
+    return res.redirect("/login");
+  }
+
+  //  OTP expired?
+  if (!user.otp || user.otpExpiry < Date.now()) {
+    req.flash("error", "OTP expired. Please resend OTP.");
+    return res.render("users/verifyOtp.ejs", { email });
+  }
+
+  // OTP mismatch?
+  if (user.otp !== otp) {
+    req.flash("error", "Invalid OTP");
+    return res.render("users/verifyOtp.ejs", { email });
   }
 
   user.isVerified = true;
   user.otp = undefined;
   user.otpExpiry = undefined;
+  user.otpResendAt = undefined;
+
   await user.save();
 
   req.login(user, (err) => {
@@ -70,6 +96,29 @@ module.exports.verifyOtp = async (req, res, next) => {
     req.flash("success", "Email verified! Welcome to WanderLust");
     res.redirect("/listings");
   });
+};
+
+module.exports.resendOtp = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  if (user.otpResendAt > Date.now()) {
+    const wait = Math.ceil((user.otpResendAt - Date.now()) / 1000);
+    return res.status(429).json({ error: `Wait ${wait}s` });
+  }
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+  user.otp = otp;
+  user.otpExpiry = Date.now() + 5 * 60 * 1000;
+  user.otpResendAt = Date.now() + 60 * 1000;
+
+  await user.save();
+  await sendOtp(user.email, otp);
+
+  res.json({ success: "OTP resent" });
 };
 
 module.exports.login = (req, res) => {

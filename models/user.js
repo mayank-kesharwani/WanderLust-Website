@@ -10,6 +10,7 @@ const userSchema = new Schema({
 
   otp: String,
   otpExpiry: Date,
+  otpResendAt: Date,   // ⏱ cooldown control
   isVerified: {
     type: Boolean,
     default: false,
