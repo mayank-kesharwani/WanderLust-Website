@@ -7,7 +7,7 @@ const cohere = new CohereClient({
 
 module.exports = async function chatWithAI(message) {
   const response = await cohere.chat({
-    model: "command-r",
+    model: "command-r-plus",
     message: message,
     preamble:
       "You are WanderBot, a helpful AI assistant for a travel and accommodation platform called WanderLust.",
