@@ -2,6 +2,7 @@ const chatWithAI = require("../utils/aiChat.js");
 
 module.exports.chat = async (req, res) => {
   try {
+    console.log("AI route hit");        // 👈 ADD
     const { message } = req.body;
 
     if (!message || message.length > 500) {
