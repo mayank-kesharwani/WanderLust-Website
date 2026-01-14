@@ -6,17 +6,14 @@ const cohere = new CohereClient({
 });
 
 module.exports = async function chatWithAI(message) {
-  const response = await cohere.generate({
-    model: "command",
-    prompt: `
-You are WanderBot, a helpful AI assistant for a travel and accommodation platform called WanderLust.
-
-User question:
-${message}
-`,
+  const response = await cohere.chat({
+    model: "command-r",
+    message: message,
+    preamble:
+      "You are WanderBot, a helpful AI assistant for a travel and accommodation platform called WanderLust.",
     max_tokens: 150,
     temperature: 0.7,
   });
 
-  return response.generations[0].text.trim();
+  return response.text;
 };
