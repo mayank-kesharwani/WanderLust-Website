@@ -1,18 +1,27 @@
-const chatWithAI = require("../utils/aiChat.js");
+const chatWithCohere = require("../utils/aiChat.js");
 
 module.exports.chat = async (req, res) => {
   try {
-    console.log("AI route hit");        // 👈 ADD
     const { message } = req.body;
 
+    // validation
     if (!message || message.length > 500) {
-      return res.status(400).json({ error: "Invalid message" });
+      return res.status(400).json({
+        error: "Invalid message",
+      });
     }
 
-    const reply = await chatWithAI(message);
-    res.json({ reply });
+    // call Cohere
+    const reply = await chatWithCohere(message);
+
+    return res.json({ reply });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "AI service unavailable" });
+    console.error("Cohere Error:", err);
+
+    return res.json({
+      reply:
+        "⚠️ AI service is temporarily unavailable. Please try again later.",
+    });
   }
 };

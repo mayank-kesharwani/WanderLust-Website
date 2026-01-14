@@ -19,16 +19,6 @@ body{
     color: #222222 !important;
 }
 
-/* .f-info-links, .f-info-socials, .f-brand{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-.f-info-socials i{
-    font-size: 1.2rem;
-} */
 .f-info-links a{
     text-decoration: none;
     color: #222222;
@@ -87,6 +77,7 @@ body{
   color: #000;
 }
 
+/* ChatBot */
 #chatbot {
   position: fixed;
   bottom: 90px;
