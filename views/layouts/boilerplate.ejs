@@ -34,16 +34,21 @@
       <%- include("../includes/flash.ejs") %> <%- body%>
     </div>
     <!-- AI Chatbot UI -->
-    <div id="chatbot">
-      <div id="chat-header">WanderBot 🤖</div>
+    <!-- Chatbot Toggle Button -->
+    <div id="chatbot-toggle">🤖</div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbot" class="hidden">
+      <div id="chat-header">
+        WanderBot 🤖
+        <span id="chat-close">✕</span>
+      </div>
+
       <div id="chat-body">
         <p><b>WanderBot:</b> Hi! How can I help you today?</p>
       </div>
-      <input
-        id="chat-input"
-        type="text"
-        placeholder="Ask me about trips, stays, or features..."
-      />
+
+      <input id="chat-input" type="text" placeholder="Ask WanderBot..." />
     </div>
     <%- include("../includes/footer.ejs") %>
     <script
@@ -93,6 +98,64 @@
           body.scrollTop = body.scrollHeight;
         }
       });
+    </script>
+    <script>
+      const toggleBtn = document.getElementById("chatbot-toggle");
+      const chatbot = document.getElementById("chatbot");
+      const closeBtn = document.getElementById("chat-close");
+
+      toggleBtn.addEventListener("click", () => {
+        chatbot.classList.remove("hidden");
+        toggleBtn.style.display = "none";
+      });
+
+      closeBtn.addEventListener("click", () => {
+        chatbot.classList.add("hidden");
+        toggleBtn.style.display = "flex";
+      });
+    </script>
+    <script>
+      const header = document.getElementById("chat-header");
+
+      let isDragging = false;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      header.addEventListener("mousedown", startDrag);
+      header.addEventListener("touchstart", startDrag);
+
+      function startDrag(e) {
+        isDragging = true;
+        const rect = chatbot.getBoundingClientRect();
+
+        offsetX = (e.clientX || e.touches[0].clientX) - rect.left;
+        offsetY = (e.clientY || e.touches[0].clientY) - rect.top;
+
+        document.addEventListener("mousemove", drag);
+        document.addEventListener("touchmove", drag);
+        document.addEventListener("mouseup", stopDrag);
+        document.addEventListener("touchend", stopDrag);
+      }
+
+      function drag(e) {
+        if (!isDragging) return;
+
+        chatbot.style.left =
+          (e.clientX || e.touches[0].clientX) - offsetX + "px";
+        chatbot.style.top =
+          (e.clientY || e.touches[0].clientY) - offsetY + "px";
+
+        chatbot.style.bottom = "auto";
+        chatbot.style.right = "auto";
+      }
+
+      function stopDrag() {
+        isDragging = false;
+        document.removeEventListener("mousemove", drag);
+        document.removeEventListener("touchmove", drag);
+        document.removeEventListener("mouseup", stopDrag);
+        document.removeEventListener("touchend", stopDrag);
+      }
     </script>
     <script src="/js/script.js"></script>
   </body>
