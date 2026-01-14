@@ -1,7 +1,6 @@
 <% layout("./layouts/boilerplate") -%>
 
 <div class="container my-4">
-
   <!-- Heading -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-6">
@@ -12,9 +11,7 @@
   <!-- Form -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-6">
-
       <form action="/login" method="post" novalidate class="needs-validation">
-
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
@@ -24,10 +21,8 @@
             class="form-control"
             id="username"
             required
-          >
-          <div class="invalid-feedback">
-            Please enter username
-          </div>
+          />
+          <div class="invalid-feedback">Please enter username</div>
         </div>
 
         <div class="mb-3">
@@ -39,20 +34,23 @@
             class="form-control"
             id="password"
             required
-          >
-          <div class="invalid-feedback">
-            Please enter password
-          </div>
+          />
+          <div class="invalid-feedback">Please enter password</div>
         </div>
 
         <div class="d-grid">
-          <button class="btn btn-success">
-            Login
-          </button>
+          <button class="btn btn-success">Login</button>
         </div>
-
       </form>
+
+      <div class="text-center mt-3">
+        <p class="mb-0">
+          Don’t have an account?
+          <a href="/signup" class="text-decoration-none fw-semibold">
+            Sign up here
+          </a>
+        </p>
+      </div>
     </div>
   </div>
-
 </div>

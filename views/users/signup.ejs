@@ -1,31 +1,22 @@
 <% layout("./layouts/boilerplate") -%>
 
 <div class="container my-4">
-
   <!-- Heading -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-6">
-      <h1 class="mt-3 text-center text-md-start">
-        Sign Up on Wanderlust
-      </h1>
+      <h1 class="mt-3 text-center text-md-start">Sign Up on Wanderlust</h1>
     </div>
   </div>
 
   <!-- Form -->
   <div class="row justify-content-center">
     <div class="col-12 col-md-6">
-
       <p class="text-muted text-center">
-        We’ll send an OTP to your email for verification
+        We’ll send an OTP to your email for verification(Check Spam Section
+        also.)
       </p>
 
-      <form
-        action="/signup"
-        method="post"
-        novalidate
-        class="needs-validation"
-      >
-
+      <form action="/signup" method="post" novalidate class="needs-validation">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
@@ -35,10 +26,8 @@
             class="form-control"
             id="username"
             required
-          >
-          <div class="invalid-feedback">
-            Please enter username
-          </div>
+          />
+          <div class="invalid-feedback">Please enter username</div>
         </div>
 
         <div class="mb-3">
@@ -50,10 +39,8 @@
             class="form-control"
             id="email"
             required
-          >
-          <div class="invalid-feedback">
-            Please enter a valid email address
-          </div>
+          />
+          <div class="invalid-feedback">Please enter a valid email address</div>
         </div>
 
         <div class="mb-3">
@@ -65,20 +52,23 @@
             class="form-control"
             id="password"
             required
-          >
-          <div class="invalid-feedback">
-            Please enter password
-          </div>
+          />
+          <div class="invalid-feedback">Please enter password</div>
         </div>
 
         <div class="d-grid">
-          <button class="btn btn-success">
-            Sign Up
-          </button>
+          <button class="btn btn-success">Sign Up</button>
         </div>
-
       </form>
+
+      <div class="text-center mt-3">
+        <p class="mb-0">
+          Already have an account?
+          <a href="/login" class="text-decoration-none fw-semibold">
+            Login here
+          </a>
+        </p>
+      </div>
     </div>
   </div>
-
 </div>
