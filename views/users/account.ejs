@@ -1,7 +1,6 @@
 <% layout("./layouts/boilerplate") -%>
 
 <div class="container my-4">
-
   <h2 class="mb-4">My Account</h2>
 
   <!-- User Info -->
@@ -19,23 +18,23 @@
       <h5 class="card-title">My Listings</h5>
 
       <% if (listings.length === 0) { %>
-        <p class="text-muted">You haven’t created any listings yet.</p>
+      <p class="text-muted">You haven’t created any listings yet.</p>
       <% } else { %>
-        <ul class="list-group">
-          <% listings.forEach(listing => { %>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              <a href="/listings/<%= listing._id %>">
-                <%= listing.title %>
-              </a>
-              <a
-                href="/listings/<%= listing._id %>/edit"
-                class="btn btn-sm btn-outline-dark"
-              >
-                Edit
-              </a>
-            </li>
-          <% }) %>
-        </ul>
+      <ul class="list-group">
+        <% listings.forEach(listing => { %>
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <a href="/listings/<%= listing._id %>"> <%= listing.title %> </a>
+          <a
+            href="/listings/<%= listing._id %>/edit"
+            class="btn btn-sm btn-outline-dark"
+          >
+            Edit
+          </a>
+        </li>
+        <% }) %>
+      </ul>
       <% } %>
     </div>
   </div>
@@ -46,24 +45,23 @@
       <h5 class="card-title">My Reviews</h5>
 
       <% if (reviews.length === 0) { %>
-        <p class="text-muted">You haven’t written any reviews yet.</p>
+      <p class="text-muted">You haven’t written any reviews yet.</p>
       <% } else { %>
-        <ul class="list-group">
-          <% reviews.forEach(review => { %>
-            <li class="list-group-item">
-              <strong>
-                <a href="/listings/<%= review.listing._id %>">
-                  <%= review.listing.title %>
-                </a>
-              </strong>
-              <br />
-              ⭐ <%= review.rating %>/5
-              <p class="mb-0"><%= review.comment %></p>
-            </li>
-          <% }) %>
-        </ul>
+      <ul class="list-group">
+        <% reviews.forEach(review => { %>
+        <li class="list-group-item">
+          <strong>
+            <a href="/listings/<%= review.listing._id %>">
+              <%= review.listing.title %>
+            </a>
+          </strong>
+          <br />
+          ⭐ <%= review.rating %>/5
+          <p class="mb-0"><%= review.comment %></p>
+        </li>
+        <% }) %>
+      </ul>
       <% } %>
     </div>
   </div>
-
 </div>

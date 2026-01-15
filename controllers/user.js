@@ -181,8 +181,7 @@ module.exports.myAccount = async (req, res) => {
   const userId = req.user._id;
 
   const listings = await Listing.find({ owner: userId });
-  const reviews = await Review.find({ author: userId })
-    .populate("listing");
+  const reviews = await Review.find({ author: userId });
 
   res.render("users/account.ejs", {
     user: req.user,
