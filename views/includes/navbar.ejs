@@ -1,49 +1,48 @@
 <style>
-  .input-search{
+  .input-search {
     border-radius: 2rem;
     min-width: 160px;
     padding: 0.5rem 3rem 0.5rem 2rem;
   }
   @media (max-width: 576px) {
-  .input-search {
-    width: 100%;
-  }
+    .input-search {
+      width: 100%;
+    }
   }
   /* Prevent text wrapping */
-.navbar {
-  white-space: nowrap;
-  z-index: 1050;
-}
-
-/* Mobile collapse background */
-.navbar-collapse {
-  background-color: #f8f9fa;
-  padding: 1rem;
-}
-
-/* Desktop reset */
-@media (min-width: 768px) {
-  .navbar-collapse {
-    background-color: transparent;
-    padding: 0;
+  .navbar {
+    white-space: nowrap;
+    z-index: 1050;
   }
-}
-  .btn-search{
+
+  /* Mobile collapse background */
+  .navbar-collapse {
+    background-color: #f8f9fa;
+    padding: 1rem;
+  }
+
+  /* Desktop reset */
+  @media (min-width: 768px) {
+    .navbar-collapse {
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+  .btn-search {
     color: #fe424d;
     border: 1px solid #fe424d !important;
     border-radius: 2rem;
     padding: 0 1rem 0 1rem;
   }
-  .btn-search:hover{
+  .btn-search:hover {
     background-color: #fe424d;
   }
-  .btn-search:active{
-    background-color: #fe424d  !important;
+  .btn-search:active {
+    background-color: #fe424d !important;
   }
 </style>
 <nav class="navbar navbar-expand-md bg-light border-bottom sticky-top">
   <div class="container-fluid">
-
     <!-- Brand -->
     <a class="navbar-brand d-flex align-items-center gap-2" href="/listings">
       <i class="fa-regular fa-compass"></i>
@@ -65,51 +64,65 @@
 
     <!-- Collapsible Content -->
     <div class="collapse navbar-collapse" id="navbarNav">
-
-      
       <!-- Search -->
       <form
-      class="d-flex my-2 my-md-0 mx-md-3"
-      role="search"
-      action="/listings"
-      method="get"
+        class="d-flex my-2 my-md-0 mx-md-3"
+        role="search"
+        action="/listings"
+        method="get"
       >
-      <input
-      class="form-control me-2 input-search"
-      type="search"
-      placeholder="Search destinations"
-      aria-label="Search"
-      name="search"
-      />
-      <button class="btn btn-outline-success btn-search" type="submit">
-        Search
-      </button>
-    </form>
-    
-    <!-- Left links -->
-    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-      <li class="nav-item">
-        <a class="nav-link" href="/listings/new">Wanderlust your home</a>
-      </li>
-    </ul>
+        <input
+          class="form-control me-2 input-search"
+          type="search"
+          placeholder="Search destinations"
+          aria-label="Search"
+          name="search"
+        />
+        <button class="btn btn-outline-success btn-search" type="submit">
+          Search
+        </button>
+      </form>
+
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings/new">Wanderlust your home</a>
+        </li>
+      </ul>
       <!-- Auth links -->
       <ul class="navbar-nav ms-md-3">
         <% if (!currentUser) { %>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/signup">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/login">Log In</a>
-          </li>
-        <% } %>
-
+        <li class="nav-item">
+          <a class="nav-link fw-bold" href="/signup">Sign Up</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link fw-bold" href="/login">Log In</a>
+        </li>
         <% if (currentUser) { %>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/logout">Logout</a>
-          </li>
+        <div class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+          >
+            <%= currentUser.username %>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="/change-password">
+                Change Password
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="/logout"> Logout </a>
+            </li>
+          </ul>
+        </div>
         <% } %>
       </ul>
-
     </div>
   </div>
 </nav>

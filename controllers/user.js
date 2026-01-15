@@ -1,5 +1,4 @@
 const User = require("../models/user.js");
-const crypto = require("crypto");
 const sendOtp = require("../utils/sendOtp");
 
 module.exports.signup = (req, res) => {
@@ -144,4 +143,38 @@ module.exports.logoutUser = (req, res, next) => {
     req.flash("success", "You are logged out!");
     res.redirect("/listings");
   });
+};
+
+// Render change password form
+module.exports.renderChangePassword = (req, res) => {
+  res.render("users/changePassword.ejs");
+};
+
+// Handle password change
+// Render change password page
+module.exports.renderChangePassword = (req, res) => {
+  res.render("users/changePassword.ejs");
+};
+
+// Handle password change
+module.exports.changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword !== confirmPassword) {
+      req.flash("error", "New passwords do not match");
+      return res.redirect("/change-password");
+    }
+
+    const user = await User.findById(req.user._id);
+
+    await user.changePassword(oldPassword, newPassword);
+
+    req.flash("success", "Password updated successfully");
+    res.redirect("/listings"); // or /login
+
+  } catch (err) {
+    req.flash("error", "Current password is incorrect");
+    res.redirect("/change-password");
+  }
 };
