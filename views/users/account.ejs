@@ -15,7 +15,11 @@
       <p><strong>Email:</strong> <%= user.email %></p>
       <p><strong>Gender:</strong> <%= user.gender || "—" %></p>
     </div>
-    <div class="mt-3">
+    <div class="d-flex gap-2 mt-3 flex-wrap">
+      <a href="/account/edit" class="btn btn-outline-dark btn-sm" style="border: #fe424d; background-color: transparent; color: #fe424d;">
+        Edit Profile
+      </a>
+
       <a href="/change-password" class="btn btn-outline-dark btn-sm">
         Change Password
       </a>
