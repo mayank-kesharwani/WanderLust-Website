@@ -1,19 +1,19 @@
 const User = require("../models/user.js");
 const sendOtp = require("../utils/sendOtp");
 const Listing = require("../models/listing.js");
-const Review = require("../models/review.js"); 
-
-module.exports.signup = (req, res) => {
-  res.render("users/signup.ejs");
-};
+const Review = require("../models/review.js");
 
 function generateOTP() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
+//Signup
+module.exports.signup = (req, res) => {
+  res.render("users/signup.ejs");
+};
 
 module.exports.signupUser = async (req, res, next) => {
   try {
-    let { username, email, password } = req.body;
+    let { firstName, lastName, username, email, password, gender } = req.body;
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -27,6 +27,8 @@ module.exports.signupUser = async (req, res, next) => {
     const otpResendAt = Date.now() + 60 * 1000;
 
     const newUser = new User({
+      firstName,
+      lastName,
       email,
       username,
       otp,
@@ -56,6 +58,7 @@ module.exports.signupUser = async (req, res, next) => {
   }
 };
 
+//OTP verification
 module.exports.verifyOtp = async (req, res, next) => {
   const { email, otp } = req.body;
 
@@ -103,7 +106,7 @@ module.exports.resendOtp = async (req, res) => {
   const { email } = req.body;
 
   const user = await User.findOne({ email });
-  
+
   if (!user) return res.status(404).json({ error: "User not found" });
 
   if (user.otpResendAt > Date.now()) {
@@ -123,6 +126,7 @@ module.exports.resendOtp = async (req, res) => {
   res.json({ success: "OTP resent" });
 };
 
+//Login
 module.exports.login = (req, res) => {
   res.render("users/login.ejs");
 };
@@ -168,14 +172,13 @@ module.exports.changePassword = async (req, res) => {
 
     req.flash("success", "Password updated successfully");
     res.redirect("/listings"); // or /login
-
   } catch (err) {
     req.flash("error", "Current password is incorrect");
     res.redirect("/change-password");
   }
 };
 
-//my account
+//My account
 
 module.exports.myAccount = async (req, res) => {
   const userId = req.user._id;
@@ -186,6 +189,27 @@ module.exports.myAccount = async (req, res) => {
   res.render("users/account.ejs", {
     user: req.user,
     listings,
-    reviews
+    reviews,
   });
+};
+
+//Update My Account
+// Render edit profile page
+module.exports.renderEditProfile = (req, res) => {
+  res.render("users/editProfile.ejs", { user: req.user });
+};
+
+// Update profile
+module.exports.updateProfile = async (req, res) => {
+  const { firstName, lastName, username, gender } = req.body;
+
+  await User.findByIdAndUpdate(req.user._id, {
+    firstName,
+    lastName,
+    username,
+    gender,
+  });
+
+  req.flash("success", "Profile updated successfully");
+  res.redirect("/account");
 };

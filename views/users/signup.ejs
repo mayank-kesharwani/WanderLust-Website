@@ -18,6 +18,27 @@
 
       <form action="/signup" method="post" novalidate class="needs-validation">
         <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input
+            type="text"
+            name="firstName"
+            class="form-control"
+            placeholder="First name"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            class="form-control"
+            placeholder="Last name"
+            required
+          />
+        </div>
+        <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input
             type="text"
@@ -42,7 +63,16 @@
           />
           <div class="invalid-feedback">Please enter a valid email address</div>
         </div>
-
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <select name="gender" class="form-select" required>
+            <option value="">Select gender</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+          <div class="invalid-feedback">Please select gender</div>
+        </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input

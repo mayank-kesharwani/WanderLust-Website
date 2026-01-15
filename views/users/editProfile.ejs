@@ -1,0 +1,51 @@
+<% layout("./layouts/boilerplate") -%>
+
+<div class="container my-4">
+  <h3 class="mb-4">Edit Profile</h3>
+
+  <form action="/account/edit" method="post">
+
+    <div class="mb-3">
+  <label class="form-label">First Name</label>
+  <input
+    type="text"
+    name="firstName"
+    class="form-control"
+    value="<%= user.firstName %>"
+  >
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Last Name</label>
+  <input
+    type="text"
+    name="lastName"
+    class="form-control"
+    value="<%= user.lastName %>"
+  >
+</div>
+
+    <div class="mb-3">
+      <label class="form-label">Username</label>
+      <input
+        type="text"
+        name="username"
+        class="form-control"
+        value="<%= user.username %>"
+        required
+      >
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Gender</label>
+      <select name="gender" class="form-select">
+        <option value="">Select gender</option>
+        <option <%= user.gender === "Male" ? "selected" : "" %>>Male</option>
+        <option <%= user.gender === "Female" ? "selected" : "" %>>Female</option>
+        <option <%= user.gender === "Other" ? "selected" : "" %>>Other</option>
+      </select>
+    </div>
+
+    <button class="btn btn-success">Save Changes</button>
+  </form>
+</div>

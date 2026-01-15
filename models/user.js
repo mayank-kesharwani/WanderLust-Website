@@ -3,6 +3,20 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new Schema({
+  firstName: {
+    type: String,
+    trim: true,
+  },
+
+  lastName: {
+    type: String,
+    trim: true,
+  },
+
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Other"],
+  },
   email: {
     type: String,
     required: true,
@@ -10,7 +24,7 @@ const userSchema = new Schema({
 
   otp: String,
   otpExpiry: Date,
-  otpResendAt: Date,   // ⏱ cooldown control
+  otpResendAt: Date, // ⏱ cooldown control
   isVerified: {
     type: Boolean,
     default: false,

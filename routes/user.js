@@ -18,6 +18,10 @@ router.post("/change-password", isLoggedIn, userController.changePassword);
 //My Account
 router.get("/account", isLoggedIn, userController.myAccount);
 
+//Edit Profile
+router.get("/account/edit", isLoggedIn, userController.renderEditProfile);
+router.post("/account/edit", isLoggedIn, userController.updateProfile);
+
 //Login
 router.route("/login").get(userController.login).post(saveRedirectUrl, passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}), userController.loginUser)
 
