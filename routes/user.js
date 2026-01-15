@@ -15,6 +15,9 @@ router.post("/resend-otp", wrapAsync(userController.resendOtp));
 router.get("/change-password", isLoggedIn, userController.renderChangePassword);
 router.post("/change-password", isLoggedIn, userController.changePassword);
 
+//My Account
+router.get("/account", isLoggedIn, userController.myAccount);
+
 //Login
 router.route("/login").get(userController.login).post(saveRedirectUrl, passport.authenticate("local", {failureRedirect: "/login", failureFlash: true}), userController.loginUser)
 

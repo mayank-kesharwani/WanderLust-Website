@@ -98,17 +98,10 @@
         <li class="nav-item">
           <a class="nav-link fw-bold" href="/login">Log In</a>
         </li>
-        <% } %>
-        <!-- Auth links -->
-        <ul class="navbar-nav ms-md-3">
-          <% if (!currentUser) { %>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/signup">Sign Up</a>
+        <% } %> <% if (currentUser) { %>
+          <li>
+            <a class="dropdown-item" href="/account">My Account</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link fw-bold" href="/login">Log In</a>
-          </li>
-          <% } %> <% if (currentUser) { %>
           <li class="nav-item">
             <a class="nav-link" href="/change-password">Change Password</a>
           </li>

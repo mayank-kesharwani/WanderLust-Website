@@ -1,5 +1,7 @@
 const User = require("../models/user.js");
 const sendOtp = require("../utils/sendOtp");
+const Listing = require("../models/listing.js");
+const Review = require("../models/review.js"); 
 
 module.exports.signup = (req, res) => {
   res.render("users/signup.ejs");
@@ -145,12 +147,6 @@ module.exports.logoutUser = (req, res, next) => {
   });
 };
 
-// Render change password form
-module.exports.renderChangePassword = (req, res) => {
-  res.render("users/changePassword.ejs");
-};
-
-// Handle password change
 // Render change password page
 module.exports.renderChangePassword = (req, res) => {
   res.render("users/changePassword.ejs");
@@ -177,4 +173,20 @@ module.exports.changePassword = async (req, res) => {
     req.flash("error", "Current password is incorrect");
     res.redirect("/change-password");
   }
+};
+
+//my account
+
+module.exports.myAccount = async (req, res) => {
+  const userId = req.user._id;
+
+  const listings = await Listing.find({ owner: userId });
+  const reviews = await Review.find({ author: userId })
+    .populate("listing");
+
+  res.render("users/account.ejs", {
+    user: req.user,
+    listings,
+    reviews
+  });
 };
