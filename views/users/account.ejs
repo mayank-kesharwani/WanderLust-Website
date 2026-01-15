@@ -50,12 +50,6 @@
       <ul class="list-group">
         <% reviews.forEach(review => { %>
         <li class="list-group-item">
-          <strong>
-            <a href="/listings/<%= review.listing._id %>">
-              <%= review.listing.title %>
-            </a>
-          </strong>
-          <br />
           ⭐ <%= review.rating %>/5
           <p class="mb-0"><%= review.comment %></p>
         </li>
