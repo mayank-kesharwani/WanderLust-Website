@@ -1,5 +1,11 @@
 <% layout("./layouts/boilerplate") -%>
-
+<style>
+  .hover-btn:hover {
+    background-color: #fe424d !important;
+    color: white !important;
+    border-color: #fe424d !important;
+  }
+</style>
 <div class="container my-4">
   <h2 class="mb-4" style="color: #fe424d">My Account</h2>
 
@@ -16,7 +22,7 @@
       <p><strong>Gender:</strong> <%= user.gender || "—" %></p>
     </div>
     <div class="d-flex gap-2 mt-3 flex-wrap">
-      <a href="/account/edit" class="btn btn-outline-dark btn-sm" style="border: #fe424d; background-color: transparent; color: #fe424d;">
+      <a href="/account/edit" class="btn btn-outline-dark btn-sm hover-btn" style="border: #fe424d; background-color: transparent; color: #fe424d;">
         Edit Profile
       </a>
 
