@@ -6,6 +6,9 @@
     <h3 class="text-center mb-3">Verify Your Email</h3>
 
     <form action="/verify-otp" method="post">
+      <p class="text-muted text-center">
+        Didn’t receive the email? Please check your Spam folder and mark it as “Not Spam”.
+      </p>
       <input type="hidden" name="email" value="<%= email %>">
 
       <div class="mb-3">
@@ -22,7 +25,7 @@
       <p id="otp-timer" class="text-muted"></p>
 
       <div class="d-grid">
-        <button class="btn btn-success">
+        <button class="btn btn-success add-btn">
           Verify OTP
         </button>
       </div>
