@@ -26,7 +26,7 @@ If you didn’t request this, you can safely ignore this email.
 
 Thanks,
 WanderLust Team
-https://wanderlust-website-zwnd.onrender.com`,
+https://wanderlust-website-zwnd.onrender.com/listings`,
   };
 
   await sgMail.send(msg);

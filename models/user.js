@@ -30,6 +30,13 @@ const userSchema = new Schema({
     default: false,
   },
 });
+userSchema.index(
+  { otpExpiry: 1 },
+  {
+    expireAfterSeconds: 0,
+    partialFilterExpression: { isVerified: false },
+  }
+);
 
 userSchema.plugin(passportLocalMongoose);
 
