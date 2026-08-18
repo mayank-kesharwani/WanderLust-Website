@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@getbrevo/brevo": "^6.0.3",
     "@mapbox/mapbox-sdk": "^0.16.0",
     "@sendgrid/mail": "^8.1.6",
     "cloudinary": "^1.41.3",
