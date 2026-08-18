@@ -44,7 +44,7 @@
 
   </div>
 </div>
-<script>
+<!-- <script>
   // ⏱ OTP expiry (5 minutes)
   let expiryTime = Date.now() + 5 * 60 * 1000;
 
@@ -100,5 +100,128 @@
       }
       resendBtn.innerText = `Resend OTP (${resendCooldown--}s)`;
     }, 1000);
+  });
+</script> -->
+
+<script>
+  const timerEl = document.getElementById("otp-timer");
+  const resendBtn = document.getElementById("resendBtn");
+
+  // =========================
+  // OTP EXPIRY TIMER
+  // =========================
+
+  let expiryTime = Date.now() + 5 * 60 * 1000;
+  let expiryInterval;
+
+  function startExpiryTimer() {
+    // Clear previous timer
+    clearInterval(expiryInterval);
+
+    // Reset expiry to 5 minutes
+    expiryTime = Date.now() + 5 * 60 * 1000;
+
+    expiryInterval = setInterval(() => {
+      const diff = expiryTime - Date.now();
+
+      if (diff <= 0) {
+        timerEl.innerText = "OTP expired. Please resend OTP.";
+        clearInterval(expiryInterval);
+        return;
+      }
+
+      const min = Math.floor(diff / 60000);
+      const sec = Math.floor((diff % 60000) / 1000);
+
+      timerEl.innerText =
+        `OTP expires in ${min}:${sec.toString().padStart(2, "0")}`;
+    }, 1000);
+  }
+
+
+  // =========================
+  // RESEND COOLDOWN TIMER
+  // =========================
+
+  let resendCooldown = 60;
+  let cooldownInterval;
+
+  function startResendCooldown() {
+    clearInterval(cooldownInterval);
+
+    resendCooldown = 60;
+    resendBtn.disabled = true;
+    resendBtn.innerText = `Resend OTP (${resendCooldown}s)`;
+
+    cooldownInterval = setInterval(() => {
+      resendCooldown--;
+
+      if (resendCooldown <= 0) {
+        resendBtn.disabled = false;
+        resendBtn.innerText = "Resend OTP";
+        clearInterval(cooldownInterval);
+        return;
+      }
+
+      resendBtn.innerText = `Resend OTP (${resendCooldown}s)`;
+    }, 1000);
+  }
+
+
+  // =========================
+  // INITIAL TIMERS
+  // =========================
+
+  startExpiryTimer();
+  startResendCooldown();
+
+
+  // =========================
+  // RESEND OTP
+  // =========================
+
+  resendBtn.addEventListener("click", async () => {
+
+    resendBtn.disabled = true;
+    resendBtn.innerText = "Sending...";
+
+    try {
+      const res = await fetch("/resend-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: "<%= email %>"
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Unable to resend OTP");
+
+        // Restart cooldown only if appropriate
+        startResendCooldown();
+
+        return;
+      }
+
+      alert(data.success || "OTP resent successfully");
+
+      // ⭐ IMPORTANT:
+      // Reset OTP expiry timer to 5 minutes
+      startExpiryTimer();
+
+      // Reset resend cooldown to 60 seconds
+      startResendCooldown();
+
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+
+      alert("Something went wrong. Please try again.");
+
+      startResendCooldown();
+    }
   });
 </script>
